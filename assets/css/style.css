@@ -1,0 +1,23 @@
+body {
+    color: palevioletred;
+    background: url("https://i.pinimg.com/originals/96/97/70/96977033a0a0548b3deab4599f92ec3f.jpg") ;
+    background-repeat: no-repeat;
+    background-size: 110%;
+}
+h3 , h1{
+    background: black;
+    margin: 2px;
+    padding: 20px;
+    border-radius: 25%;
+}
+.footer {
+    margin-top: 28%;
+    height: 200px;
+    width: 110%;
+    background-color: black;
+    position: sticky;
+    text-align: center;
+}
+.card-text {
+    font-size: 18px;
+}
