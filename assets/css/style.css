@@ -1,5 +1,5 @@
 body {
-    color: palevioletred;
+    color: rgb(187, 24, 78);
     background: url("https://i.pinimg.com/originals/96/97/70/96977033a0a0548b3deab4599f92ec3f.jpg") ;
     background-repeat: no-repeat;
     background-size: 110%;
@@ -20,4 +20,16 @@ h3 , h1{
 }
 .card-text {
     font-size: 18px;
+
+}
+.card {
+    height: 280px;
+}
+#gameStatus {
+    background: black;
+    margin: 2px;
+    padding: 20px;
+    border-radius: 25%;
+    text-align: center;
+    font-size: 32px;
 }
