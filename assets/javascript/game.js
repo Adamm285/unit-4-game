@@ -2,17 +2,36 @@ var fighters = ["batman", "superman", "joker", "two-face"];
 var player1 = '';
 var computer = '';
 var defenders = '';
-
-
+var playerHP = 0;
+var playerATK = 0;
+var computerHP = 0;
+var computerATK = 0;
+var gameStatus = ''
+function gameRestart (){
+    $('#gameStatus').empty()
+}
 
 $(document).ready(function () {
     $(".batman, .superman, .joker, .two-face").on("click", function(){
         if ($('.player-1').is(':empty')){
             $(this).appendTo('heroes')
-            $('.fighters').appendTo('.player-1')
-        
+            $(this).addClass('fighters')
+            $('.fighters').appendTo(".player-1")
+            playerHP = parseInt($('.player-1 .fighters .hp').text())
+            playerATK = parseInt($('.player-1 .fighters .atk').text())
+            $('.player-hp').text(playerHP)
+            console.log(playerHP);
+            console.log(playerATK);
+            
         }else if ($('.computer').is(':empty')){
-            $(this).appendTo('.computer')
+            console.log(this);
+            
+            $(this).appendTo('computer')
+            $(this).addClass('defenders')
+            $('.defenders').appendTo('.computer')
+            computerHP = parseInt($('.computer .defenders .hp').text())
+            computerATK = parseInt($('.computer .defenders .atk').text())
+            $('.computer-hp').text(computerHP)
         }
     })
     $('.btn-success').on("click", function() {
@@ -20,28 +39,41 @@ $(document).ready(function () {
             $(('gameStatus').text("You must select your fighter!"))
         };
 
-        var player1 ={"hp": parseInt($('.player-1').find('.hp').text()), "attack":parseInt($('.player-1').find('.atk').text())};
-        var computer = {"hp" :parseInt($('.computer').find('.hp').text()), "attack":parseInt($('.computer').find('.atk').text())};
-console.log(player1, computer);
+        var player1 ={"hp": playerHP, "attack": playerATK};
+        var computer = {"hp": computerHP, "attack":computerATK};
+        console.log(player1, computer);
 
         computer.hp = computer.hp - player1.attack;
         player1.hp = player1.hp - computer.attack;
+        playerHP = player1.hp
         player1.attack = player1.attack*2;
+        playerATK = player1.attack
         computer.attack = 25;
+        computerHP = computer.hp
+        computerATK = computer.attack
         $('#player-hp').html("Player HP: " + player1.hp);
         $('#player-atk').html("Player Attack: " + player1.attack);
         $('#computer-hp').html("Computer HP: " + computer.hp);
         $('#computer-attack').html("Computer Attack: " + computer.attack);
-console.log(player1, computer, player1.attack);
+
+        console.log(player1, computer, player1.attack);
+        console.log();
 
 
         if(player1.hp < 1 && computer.hp > 1) {
-            $('.player-1').empty();
+            $('.player-1', '.computer').empty();
+            $('#gameStatus').text("You lose!");
             
+            
+        }
+        if (player1.hp > 1 && computer.hp < 1){
+            $('.player-1', '.computer').empty();
+            $('#gameStatus').text("You win!");
+
         }
     })
 });
-// for what every reason it oly lets me choose batman as player 1
+ 
 // math coding broke when i tried to add it to a scoreboard instead of being inside a card.
 
 
