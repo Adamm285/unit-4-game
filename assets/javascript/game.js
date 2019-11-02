@@ -13,13 +13,18 @@ var superman;
 var twoFace;
 
 function gameRestart() {
-    $('#gameStatus').empty()
+    $('#gameStatus').remove()
 }
 
 $(document).ready(function () {
+    console.log($('.player-1').is(':empty'));
+
     $(".batman, .superman, .joker, .two-face").on("click", function () {
-        if ($('.player-1').is(':empty')) {
-            $(this).appendTo('heroes')
+        if (player1 == '') {
+            player1 = {
+                "hp": playerHP,
+                "attack": playerATK
+            };
             $(this).addClass('fighters')
             $('.fighters').appendTo(".player-1")
             playerHP = parseInt($('.player-1 .fighters .hp').text())
@@ -27,10 +32,13 @@ $(document).ready(function () {
             $('.player-hp').text(playerHP)
             console.log(playerHP);
             console.log(playerATK);
-
-        } else if ($('.computer').is(':empty')) {
+            console.log($('.player-1').is(':empty'));
+        } else if (computer == '') {
             console.log(this);
-
+            computer = {
+                "hp": computerHP,
+                "attack": computerATK
+            };
             $(this).appendTo('computer')
             $(this).addClass('defenders')
             $('.defenders').appendTo('.computer')
@@ -44,14 +52,15 @@ $(document).ready(function () {
             $('gameStatus').text("You must select your fighter!");
         } else {
 
-            var player1 = {
+            player1 = {
                 "hp": playerHP,
                 "attack": playerATK
             };
-            var computer = {
+            computer = {
                 "hp": computerHP,
                 "attack": computerATK
             };
+
             console.log(player1, computer);
 
             computer.hp = computer.hp - player1.attack;
@@ -59,51 +68,55 @@ $(document).ready(function () {
             playerHP = player1.hp
             player1.attack = player1.attack + 20;
             playerATK = player1.attack
-            computer.attack =30;
+            computer.attack = 25;
             computerHP = computer.hp
             computerATK = computer.attack
+
             $('#player-hp').html("Player HP: " + player1.hp);
             $('#player-atk').html("Player Attack: " + player1.attack);
             $('#computer-hp').html("Computer HP: " + computer.hp);
             $('#computer-attack').html("Computer Attack: " + computer.attack);
 
+
+
             console.log(player1, computer, player1.attack);
             console.log();
         }
-
         if (player1.hp < 1 && computer.hp > 1) {
             $('.player-1', '.computer').empty();
-            $('#gameStatus').text("You lose!");
-
-
-
-
+            $('#results').text("You lose!");
+            alert("you lost!")
+            window.location.reload(true);
         }
-        if (player1.hp > 1 && computerHP < 1) {
-            $('.player-1', '.computer').empty();
-            $('#gameStatus').text("You didn't win-win!");
+        if (player1.hp > 1 && computer.hp < 1) {
+            computer = '';
+            computerHP= 0;
+            computerATK = 0;
+            console.log(computerHP);
             
+            $('.player-1', '.computer').remove();
+            $('#player-hp').html("Player HP: " + player1.hp);
+            $('#player-atk').html("Player Attack: " + player1.attack);
+            $('#computer-hp').html("Computer HP: " + computerHP);
+            $('#computer-attack').html("Computer Attack: " + computerATK);
             $('.defenders').detach();
+            alert("you won")
+            
+
+            // $('#results').text("pick another fighter");
 
         }
+        if (player1.hp < 1 && computer.hp < 1) {
+            $('.player-1', '.computer').empty();
+            $('#player-hp').html("Player HP: " + player1.hp);
+            $('#player-atk').html("Player Attack: " + player1.attack);
+            $('#computer-hp').html("Computer HP: " + computer.hp);
+            $('#computer-attack').html("Computer Attack: " + computer.attack);
+            $('.defenders').detach();
+            alert("you tied")
+            window.location.reload(true);
+        }
+
     })
+
 });
-
-
-
-
-
-// for (var i = 0; i < fighters.length; i++) {
-//     var fightersBtn = $("<div>");
-//     fightersBtn.addClass("fighter-button");
-//     fightersBtn.attr("data-fighter", fighters[i]);
-//     fightersBtn.text(fighters[i]);
-//     $(".fighters").append(fightersBtn);
-// }
-// make function with name select player 1
-// for (var i = 0; i < fighters.length; i++) {
-//     var boogers = $("." + fighters[i]).detach();
-//     $(".display-1").append(boogers);
-//     // take remaining fighters and append to display-2
-
-// }
